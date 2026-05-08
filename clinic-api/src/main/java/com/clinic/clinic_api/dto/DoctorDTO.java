@@ -1,15 +1,18 @@
 package com.clinic.clinic_api.dto;
 
-import jakarta.validation.constraints.NotBlank;
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.*;
 import lombok.Data;
 
 @Data
 public class DoctorDTO {
+    @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     private Long id;
 
-    @NotBlank(message = "Name is required")
+    @NotBlank(message = "Ім'я лікаря не може бути порожнім")
+    @Size(min = 2, max = 100, message = "Ім'я має містити від 2 до 100 символів")
     private String name;
 
-    @NotBlank(message = "Specialization is required")
+    @NotBlank(message = "Спеціалізація є обов'язковою")
     private String specialization;
 }

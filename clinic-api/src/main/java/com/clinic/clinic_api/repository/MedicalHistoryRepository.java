@@ -1,33 +1,16 @@
 package com.clinic.clinic_api.repository;
 
 import com.clinic.clinic_api.model.MedicalHistory;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.*;
-import java.util.concurrent.atomic.AtomicLong;
+import java.util.Optional;
+
 
 @Repository
-public class MedicalHistoryRepository {
-    private final Map<Long, MedicalHistory> medicalHistories = new HashMap<>();
-    private final AtomicLong idGenerator = new AtomicLong(1);
+public interface MedicalHistoryRepository extends JpaRepository<MedicalHistory, Long> {
+    boolean existsByPatientId(Long patientId);
 
-    public List<MedicalHistory> findAll() {
-        return new ArrayList<>(medicalHistories.values());
-    }
+    Optional<MedicalHistory> findByPatientId(Long patientId);
 
-    public Optional<MedicalHistory> findById(Long id) {
-        return Optional.ofNullable(medicalHistories.get(id));
-    }
-
-    public MedicalHistory save(MedicalHistory MedicalHistory) {
-        if (MedicalHistory.getId() == null) {
-            MedicalHistory.setId(idGenerator.getAndIncrement());
-        }
-        medicalHistories.put(MedicalHistory.getId(), MedicalHistory);
-        return MedicalHistory;
-    }
-
-    public void deleteById(Long id) {
-        medicalHistories.remove(id);
-    }
 }

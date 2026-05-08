@@ -1,22 +1,26 @@
 package com.clinic.clinic_api.dto;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.*;
 import lombok.Data;
 
 @Data
 public class TreatmentDTO {
+    @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     private Long id;
 
-    @NotNull(message = "Diagnosis ID is required")
+    @NotNull(message = "ID діагнозу обов'язкове")
+    @Positive(message = "ID діагнозу має бути додатнім числом")
     private Long diagnosisId;
 
-    @NotBlank(message = "Medicine name is required")
+    @NotBlank(message = "Назва ліків не може бути порожньою")
     private String medicineName;
 
-    @NotBlank(message = "Dosage is required")
+    @NotBlank(message = "Дозування є обов'язковим")
     private String dosage;
 
-    @NotNull(message = "Duration in days is required")
+    @NotNull(message = "Тривалість лікування обов'язкова")
+    @Min(value = 1, message = "Мінімальна тривалість лікування - 1 день")
+    @Max(value = 365, message = "Максимальна тривалість лікування - 365 днів")
     private Integer durationDays;
 }
