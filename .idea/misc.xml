@@ -5,10 +5,13 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/clinic-api/pom.xml" />
+        <option value="$PROJECT_DIR$/clinic-api/patient-service/pom.xml" />
+        <option value="$PROJECT_DIR$/clinic-api/api-gateway/pom.xml" />
+        <option value="$PROJECT_DIR$/clinic-api/appointment-service/pom.xml" />
       </list>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" project-jdk-name="ms-17" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" default="true" project-jdk-name="ms-17" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>
 </project>
