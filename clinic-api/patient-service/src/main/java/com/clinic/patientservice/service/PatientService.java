@@ -9,6 +9,8 @@ import com.clinic.patientservice.repository.MedicalHistoryRepository;
 import com.clinic.patientservice.repository.PatientRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -48,7 +50,7 @@ public class PatientService {
     public Page<PatientDTO> getAllPatients(Pageable pageable) {
         return patientRepository.findAll(pageable).map(this::mapToDTO);
     }
-
+    @Cacheable(value = "patients", key = "#id")
     public PatientDTO getPatientById(Long id) {
         return patientRepository.findById(id)
                 .map(this::mapToDTO)
@@ -56,6 +58,7 @@ public class PatientService {
     }
 
     @Transactional
+    @CacheEvict(value = "patients", allEntries = true)
     public PatientDTO createPatient(PatientDTO dto) {
         // БІЗНЕС-ЛОГІКА: Перевірка унікальності номера телефону
         if (patientRepository.existsByPhone(dto.getPhone())) {
@@ -111,7 +114,7 @@ public class PatientService {
             throw new IllegalStateException("Не вдалося перевірити прийоми пацієнта через недоступність сервісу розкладу. Видалення скасовано.");
         }
 
-        // Завдяки CascadeType.ALL у Entity, медична історія видалиться автоматично
+        // Завдяки CascadeType.ALL в Entity, медична історія видалиться автоматично
         patientRepository.delete(patient);
     }
 }

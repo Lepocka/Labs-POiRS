@@ -8,5 +8,10 @@ spring:
     username: postgres
     password: 2012Mykola2012
   jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
       ddl-auto: update
+data:
+  redis:
+    host: localhost
+    port: 6379

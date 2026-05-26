@@ -14,10 +14,10 @@ spring:
             allowedHeaders: "*"
       routes:
         - id: patient-service
-          uri: http://localhost:8081
+          uri: http://patient-service:8081
           predicates:
             - Path=/api/patients/**, /api/medical-histories/**, /api/diagnoses/**
         - id: appointment-service
-          uri: http://localhost:8082
+          uri: http://appointment-service:8082
           predicates:
             - Path=/api/appointments/**, /api/doctors/**, /api/payments/**
